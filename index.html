@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曹大王主页</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            cursor: default;
+            font-family: sans-serif;
+        }
+
+        .bg {
+            position: fixed;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* 以上是背景样式 */
+        .sousuokuang {
+            position: absolute;
+            top: 25%;
+            left: 50%;
+            width: 880px;
+            height: 80px;
+            transform: translate(-50%, 0%);
+            z-index: 1;
+        }
+
+        form {
+            z-index: 1;
+        }
+
+        form input {
+            outline: none;
+            height: 80px;
+            width: 880px;
+            border: 0px;
+            border-radius: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.192);
+            font-size: 25px;
+            text-indent: 2em;
+            transition: all 0.3s ease-in-out;
+        }
+
+        form input:hover {
+            background-color: rgba(255, 255, 255, 0.95);
+        }
+
+        .sousuo {
+            position: absolute;
+            top: 50%;
+            left: 90%;
+            transform: translate(0%, -50%) scale(1);
+            transition: all 0.3s ease-in-out;
+            opacity: 0.8;
+            z-index: 2;
+        }
+
+        .sousuo:hover {
+            transform: translate(0%, -50%) scale(1.1);
+            opacity: 1;
+        }
+
+        ul {
+            width: 800px;
+            transform: translateX(5%);
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.192);
+            background-color: rgba(255, 255, 255, 0.8);
+        }
+
+        li {
+            width: 800px;
+            margin-bottom: 10px;
+            text-indent: 1em;
+            list-style: none;
+            transition: all 0.2s ease-in-out;
+
+        }
+
+        li:hover {
+            background: rgba(59, 59, 59, 0.103);
+        }
+
+        ul a {
+            display: inline-block;
+            width: 100%;
+            text-decoration: none;
+            font-size: 25px;
+            color: black;
+        }
+
+        /* 以上是搜索栏样式 */
+
+        .tag {
+            display: flex;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 0);
+            width: 1200px;
+            /* background-color: pink; */
+            justify-content: center;
+            flex-wrap: wrap;
+            align-items: flex-start;
+        }
+
+        .tag a:nth-child(7) div {
+            margin-right: 0px !important;
+        }
+
+        .tag div {
+            position: relative;
+            height: 120px;
+            width: 120px;
+            border-radius: 50%;
+            box-shadow: 0px 5px 8px rgba(0, 0, 0, 0.253);
+            background-color: rgba(255, 255, 255, 0.904);
+            margin: 0px 50px 50px 0px;
+            transition: all 0.35s ease-in-out;
+        }
+
+        .tag div img {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -55%);
+            width: 60px;
+        }
+
+        .tag a:hover div {
+            transform: scale(1.1);
+            background-color: rgba(255, 255, 255);
+            box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag a:active div {
+            transform: scale(1.05);
+            transition: all 0.1s ease-in-out;
+            box-shadow: 0px 5px 13px rgba(0, 0, 0, 0.1);
+        }
+
+        .tag a:last-child div {
+            margin-right: 0px !important;
+        }
+
+        /* 以上是标签栏 */
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <img src="img/bg.jpg" height="1080px">
+    </div>
+    <form action="http://www.baidu.com/baidu" name="baidu">
+        <div class="sousuokuang">
+            <img src="img/sousuo.png" class="sousuo" onclick="javscript:document.baidu.submit()" height="60px">
+            <input type=text name=word size=30 id="lianxiang">
+            <ul id="ul">
+            </ul>
+        </div>
+        <script>
+            var input = document.getElementById('lianxiang')
+            var oUl = document.getElementById('ul')
+            input.onkeyup = function () {
+                var value = this.value;
+                var oScript = document.createElement('script');
+                oScript.src = 'https://sp0.baidu.com/5a1Fazu8AA54nxGko9WTAnF6hhy/su?wd=' + value + '&cb=aa'
+                // 核心在这里，
+                // 1.实时获取参数 value
+                // 2.cb=返回值的处理函数（aa）
+                document.body.appendChild(oScript)
+            }
+            function aa(data) {
+                oUl.style.display = 'block';
+                var list = data.s;
+                var str = '';
+                if (list.length > 0) {
+                    list.forEach(function (ele, index) {
+                        str += '<li><a href ="https://www.baidu.com/s?wd=' + ele + '" id="test">' + ele + '</li>';
+                    })
+                    oUl.innerHTML = str;
+                } else {
+                    oUl.style.display = 'none';
+                }
+            }
+        </script>
+    </form>
+    <div class="tag">
+        <a href="https://sspai.com">
+            <div class="logo">
+                <img src="img/shaoshupai.png">
+            </div>
+        </a>
+        <a href="https://www.douban.com">
+            <div class="logo">
+                <img src="img/douban.png">
+            </div>
+        </a>
+        <a href="https://www.bilibili.com/">
+            <div class="logo">
+                <img src="img/bilibili.png">
+            </div>
+        </a>
+        <a href="https://www.apple.com.cn">
+            <div class="logo">
+                <img src="img/apple.png">
+            </div>
+        </a>
+        <a href="https://www.zhihu.com">
+            <div class="logo">
+                <img src="img/zhihu.png">
+            </div>
+        </a>
+        <a href="https://www.iconfont.cn">
+            <div class="logo">
+                <img src="img/iconfont.png">
+            </div>
+        </a>
+        <a href="https://teaching.applysquare.com/">
+            <div class="logo">
+                <img src="img/jiaoxuelifang.png">
+            </div>
+        </a>
+        <a href="https://www.taobao.com">
+            <div class="logo">
+                <img src="img/taobao.png">
+            </div>
+        </a>
+        <a href="https://weibo.com">
+            <div class="logo">
+                <img src="img/weibo.png">
+            </div>
+        </a>
+        <a href="https://www.icourse163.org">
+            <div class="logo">
+                <img src="img/mooc.png">
+            </div>
+        </a>
+    </div>
+</body>
+
+</html>
